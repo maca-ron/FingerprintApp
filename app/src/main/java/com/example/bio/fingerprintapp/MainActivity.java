@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import javax.crypto.Cipher;
 
@@ -22,10 +23,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickFingerPrint(View view) {
-        Log.i("", "debug_aaa");
         FingerprintManager fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
         if (fingerprintManager.isHardwareDetected() || fingerprintManager.hasEnrolledFingerprints()) {//指紋を取るハードウェアがあり、かつ、指紋が登録されていることをチェック。
-            Log.i("", "debug_xxx");
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
@@ -37,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("", "permission");
                 return;
             }
+            Toast.makeText(this, "指紋認証してください。", Toast.LENGTH_LONG).show();
             fingerprintManager.authenticate(null, null, 0, new FingerprintManager.AuthenticationCallback() {
                 @Override
                 public void onAuthenticationError(int errorCode, CharSequence errString) {
@@ -63,6 +63,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }, new Handler());
         }
-        Log.i("", "debug_zzz");
     }
 }
