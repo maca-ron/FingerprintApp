@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickFingerPrint(View view) {
+        Log.i("", "debug_aaa");
         FingerprintManager fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
         if (fingerprintManager.isHardwareDetected() || fingerprintManager.hasEnrolledFingerprints()) {//指紋を取るハードウェアがあり、かつ、指紋が登録されていることをチェック。
             Log.i("", "debug_xxx");
@@ -53,16 +54,15 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
                     Log.i("", "auth success");
-                    Cipher cipher = result.getCryptoObject().getCipher();
                     try {
-                        byte[] responseToServer = cipher.doFinal("server challenge".getBytes());
                         Intent intent = new Intent(MainActivity.this, AuthActivity.class);
-                        intent.putExtra("response", new String(responseToServer, "UTF-8"));
+                        intent.putExtra("response", "success");
                         MainActivity.this.startActivity(intent);
                     } catch (Exception ignored) {
                     }
                 }
             }, new Handler());
         }
+        Log.i("", "debug_zzz");
     }
 }
